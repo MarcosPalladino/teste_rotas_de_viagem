@@ -1,0 +1,50 @@
+﻿@model IEnumerable<RotasViagensFront.Models.RotaViagem>
+
+@{
+    ViewData["Title"] = "Cadastro de Rotas de Viagem";
+}
+
+<div class="container mt-3">
+    <h2>Rotas de Viagem</h2>
+    <button class="btn btn-success" data-toggle="modal" data-target="#editModal">Nova Rota</button>
+
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Origem</th>
+                <th>Escalas</th>
+                <th>Destino</th>
+                <th>Valor</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rota in Model)
+            {
+                <tr>
+                    <td>@rota.Origem</td>
+                    <td>
+                        <ul>
+                            @foreach (var escala in rota.Escalas)
+                            {
+                                <li>@escala.Destino</li>
+                            }
+                        </ul>
+                    </td>
+                    <td>@rota.Destino</td>
+                    <td>@rota.Valor.ToString("C")</td>
+                    <td>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#editModal" data-id="@rota.Id">Editar</button>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="@rota.Id">Excluir</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal de Edição -->
+@Html.Partial("_EditModal")
+
+<!-- Modal de Exclusão -->
+@Html.Partial("_DeleteModal")

@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RotasViagensFront.Models;
-using System.Diagnostics;
 
 namespace RotasViagensFront.Controllers
 {
-    public class HomeController : Controller
+    public class RotaController : Controller
     {
         private readonly HttpClient _httpClient;
 
-        public HomeController(IHttpClientFactory httpClientFactory, ILogger<HomeController> logger)
+        public RotaController(IHttpClientFactory httpClientFactory)
         {
             _httpClient = httpClientFactory.CreateClient();
         }
@@ -17,7 +16,7 @@ namespace RotasViagensFront.Controllers
         public async Task<IActionResult> Index()
         {
             List<RotaViagem> rotas = new List<RotaViagem>();
-            HttpResponseMessage response = await _httpClient.GetAsync("https://localhost:7059/api/Rotas"); 
+            HttpResponseMessage response = await _httpClient.GetAsync("https://localhost:7059/api/Rotas");
 
             if (response.IsSuccessStatusCode)
             {
@@ -26,17 +25,6 @@ namespace RotasViagensFront.Controllers
             }
 
             return View(rotas);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

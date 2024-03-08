@@ -45,7 +45,6 @@ public class RotaService : IRotaService
 
     public async Task<Resultado> GetBestRotaAsync(string origem, string destino)
     {
-        // Implementação de exemplo. Você precisará adaptar conforme sua lógica de negócios e estrutura do banco de dados.
         var rotas = await GetAllRotasAsync();
         RotaViagem melhorRota = null;
         decimal melhorPreco = decimal.MaxValue;
@@ -54,7 +53,6 @@ public class RotaService : IRotaService
         {
             if (rota.Origem == origem && rota.Destino == destino)
             {
-                // Assumindo que o valor da rota reflete o custo (você pode precisar ajustar isso)
                 if (rota.Valor < melhorPreco)
                 {
                     melhorPreco = rota.Valor;

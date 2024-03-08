@@ -18,6 +18,6 @@ public interface IRotaService
     Task DeleteRotaAsync(RotaViagem rota);
 
     // Método para encontrar a melhor rota de viagem entre uma origem e um destino
-    // com base em critérios específicos, como o menor preço e o número de escalas
+    // com base em critérios específicos, como o menor preço 
     Task<Resultado> GetBestRotaAsync(string origem, string destino);
 }

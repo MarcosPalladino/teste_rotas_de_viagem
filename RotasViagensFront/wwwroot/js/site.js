@@ -27,7 +27,7 @@
             $('#editModal').modal('hide');
 
             // Recarregar parte da página ou redirecionar conforme necessário
-            location.reload(); // Simples recarga da página para ver os novos dados
+            location.reload(); 
         },
         error: function (xhr, status, error) {
             // Tratar erros aqui
