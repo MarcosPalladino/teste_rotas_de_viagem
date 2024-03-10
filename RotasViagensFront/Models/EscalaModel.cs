@@ -1,6 +1,6 @@
 ﻿namespace RotasViagensFront.Models
 {
-    public class Escala
+    public class EscalaModel
     {
         public int Id { get; set; }
         public int IdRota { get; set; }

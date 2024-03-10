@@ -1,50 +1,61 @@
-﻿@model IEnumerable<RotasViagensFront.Models.RotaViagem>
+﻿@model List<RotaViagemModel>
 
 @{
-    ViewData["Title"] = "Cadastro de Rotas de Viagem";
+    ViewData["Title"] = "Lista de Rotas de Viagem";
 }
+<div class="text-center">
+    <div class="d-grid gcp-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-primary" role="button" asp-controller="Rota" asp-action="Criar">Adicionar Nova Rota</a>
+    </div>
+    <br />
+    <h1 class="display-4">Lista de Rotas de Viagem</h1>
 
-<div class="container mt-3">
-    <h2>Rotas de Viagem</h2>
-    <button class="btn btn-success" data-toggle="modal" data-target="#editModal">Nova Rota</button>
+    <div class="container mt-3">
 
-    <table class="table table-bordered mt-3">
-        <thead>
-            <tr>
-                <th>Origem</th>
-                <th>Escalas</th>
-                <th>Destino</th>
-                <th>Valor</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var rota in Model)
-            {
+        <table class="table table-bordered mt-3">
+            <thead>
                 <tr>
-                    <td>@rota.Origem</td>
-                    <td>
-                        <ul>
-                            @foreach (var escala in rota.Escalas)
-                            {
-                                <li>@escala.Destino</li>
-                            }
-                        </ul>
-                    </td>
-                    <td>@rota.Destino</td>
-                    <td>@rota.Valor.ToString("C")</td>
-                    <td>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#editModal" data-id="@rota.Id">Editar</button>
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="@rota.Id">Excluir</button>
-                    </td>
+                    <th>Id</th>
+                    <th>Origem</th>
+                    <th>Escalas</th>
+                    <th>Destino</th>
+                    <th>Valor</th>
+                    <th>Ações</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var rota in Model)
+                    {
+                        <tr>
+                            <td>@rota.Id</td>
+                            <td>@rota.Origem</td>
+                            <td>
+                                <ul>
+                                    @if (rota.Escalas != null)
+                                    {
+                                        @foreach (var escala in rota.Escalas)
+                                        {
+                                            <li>@escala.Destino</li>
+                                        }
+                                    }
+                                </ul>
+                            </td>
+                            <td>@rota.Destino</td>
+                            <td>@rota.Valor.ToString("C")</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a role="button" class="btn btn-primary" asp-route-id="@rota.Id" asp-controller="Rota" asp-action="Editar">Editar</a>
+                                    <a role="button" class="btn btn-danger" asp-route-id="@rota.Id" asp-controller="Rota" asp-action="ApagarConfirma">Apagar</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
-<!-- Modal de Edição -->
-@Html.Partial("_EditModal")
-
-<!-- Modal de Exclusão -->
-@Html.Partial("_DeleteModal")

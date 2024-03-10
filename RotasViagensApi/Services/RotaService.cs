@@ -46,7 +46,9 @@ public class RotaService : IRotaService
     public async Task<Resultado> GetBestRotaAsync(string origem, string destino)
     {
         var rotas = await GetAllRotasAsync();
-        RotaViagem melhorRota = null;
+        
+        RotaViagem? melhorRota = null;
+        
         decimal melhorPreco = decimal.MaxValue;
 
         foreach (var rota in rotas)
@@ -65,6 +67,8 @@ public class RotaService : IRotaService
 
         if (melhorRota != null)
         {
+            resultadoPesquisa.Origem = melhorRota.Origem;
+            resultadoPesquisa.Destino = melhorRota.Destino;
             resultadoPesquisa.Resposta = melhorRota.Imprimir();
         }
 

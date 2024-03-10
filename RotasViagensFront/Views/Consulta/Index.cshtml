@@ -1,11 +1,27 @@
-﻿@{
-    ViewData["Title"] = "Consulta da melhor rota";
-}
+﻿@model ResultadoModel
 
+@{
+    ViewData["Title"] = "Consultar melhor rota";
+}
 <div class="text-center">
-    <h1 class="display-4"> Consulta</h1>
-    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#searchModal">Consultar</button>
+
+    <h1 class="display-4">Consultar Melhor Rota</h1>
+
 </div>
 
-<!-- Modal de busca -->
-@Html.Partial("_SearchModal")
+<form asp-controller="Consulta" asp-action="Consultar" method="post">
+    <div class="row">
+        <div class="col">
+            <input type="text" asp-for="Origem" class="form-control" placeholder="Origem">
+        </div>
+        <div class="col">
+            <input type="text" asp-for="Destino" class="form-control" placeholder="Destino">
+        </div>
+    </div>
+    
+    <br />
+    <br />
+    <button type="submit" class="btn btn-primary col-12">Consultar</button>
+    <a class="btn btn-secondary col-12" role="button" asp-controller="Rota" asp-action="Index">Voltar</a>
+
+</form>

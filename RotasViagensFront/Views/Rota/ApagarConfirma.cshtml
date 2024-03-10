@@ -1,0 +1,13 @@
+﻿@model RotaViagemModel
+
+@{
+    ViewData["Title"] = "Confirmação Apagar Rotas de Viagem";
+}
+<div class="text-center">
+
+    <h3>Deseja realmente apagar a rota (@Model.Origem / @Model.Destino)?</h3>
+
+</div>
+
+<a class="btn btn-primary col-12" role="button" asp-controller="Rota" asp-action="Index">Cancelar  Exclusão</a>
+<a class="btn btn-danger col-12" role="button" asp-controller="Rota" asp-action="Apagar" asp-route-id="@Model.Id">Confirmar Exclusão</a>

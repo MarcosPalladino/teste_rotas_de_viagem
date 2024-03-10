@@ -1,0 +1,36 @@
+﻿@model ResultadoModel
+
+@{
+    ViewData["Title"] = "Melhor Resultado";
+}
+<div class="text-center">
+
+    <h1 class="display-4">Melhor Resultado</h1>
+
+</div>
+
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>Origem</th>
+            <th>Destino</th>
+            <th>Valor</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            <tr>
+                <td>@Model.Origem</td>
+                <td>@Model.Destino</td>
+                <td>@Model.Resposta</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+<br />
+
+<form>
+    <a class="btn btn-secondary col-12" role="button" asp-controller="Consulta" asp-action="Index">Voltar</a>
+</form>

@@ -43,14 +43,9 @@ public class RotasController : ControllerBase
     }
 
     // PUT: api/Rotas/5
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutRota(int id, RotaViagem rota)
+    [HttpPut]
+    public async Task<IActionResult> PutRota(RotaViagem rota)
     {
-        if (id != rota.Id)
-        {
-            return BadRequest();
-        }
-
         await _rotaService.UpdateRotaAsync(rota);
 
         return NoContent();

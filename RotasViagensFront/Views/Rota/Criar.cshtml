@@ -1,0 +1,31 @@
+﻿@model RotaViagemModel
+
+@{
+    ViewData["Title"] = "Cadastrar Rotas de Viagem";
+}
+<div class="text-center">
+    
+    <h1 class="display-4">Cadastrar Rotas de Viagem</h1>
+   
+</div>
+
+<form asp-controller="Rota" asp-action="Criar" method="post">
+    <div class="form-group">
+        <label for="origem">Origem</label>
+        <input type="text" asp-for="Origem" class="form-control" placeholder="Digite a Origem">
+    </div>
+
+    <div class="form-group">
+        <label for="destino">Destino</label>
+        <input type="text" asp-for="Destino" class="form-control" placeholder="Digite o Destino">
+    </div>
+
+    <div class="form-group">
+        <label for="valor">Valor</label>
+        <input type="text" asp-for="Valor" class="form-control" placeholder="Digite o Valor">
+    </div>
+
+    <button type="submit" class="btn btn-primary col-12">Adicionar</button>
+    <a class="btn btn-secondary col-12" role="button" asp-controller="Rota" asp-action="Index">Voltar</a>
+</form>
+

@@ -1,6 +1,6 @@
-﻿namespace RotasViagensApi.Models
+﻿namespace RotasViagensFront.Models
 {
-    public class Resultado
+    public class ResultadoModel
     {
         public string? Origem { get; set; }
         public string? Destino { get; set; }

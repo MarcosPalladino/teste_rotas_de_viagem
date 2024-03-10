@@ -1,4 +1,5 @@
-﻿using RotasViagensApi.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using RotasViagensApi.Models;
 using System.Data.SqlClient;
 
 public class ApplicationDb
@@ -93,7 +94,7 @@ public class ApplicationDb
     // retorna a rota determinada com suas escalas
     public async Task<RotaViagem> GetRotaByIdAsync(int idRota)
     {
-        RotaViagem rota = null;
+        RotaViagem? rota = null;
 
         using (var connection = new SqlConnection(_connectionString))
         {
@@ -121,29 +122,10 @@ public class ApplicationDb
         {
             var escalas = await GetEscalasAsync(idRota);
 
-            //var escalas = new List<Escala>();
-
-            //var commandEscala = new SqlCommand("SELECT * FROM ESCALAS WHERE IDROTA = @IdRota", connection);
-            //commandEscala.Parameters.AddWithValue("@IdRota", id);
-
-            //using (var reader = await commandEscala.ExecuteReaderAsync())
-            //{
-            //    while (await reader.ReadAsync())
-            //    {
-            //        var escala = new Escala
-            //        {
-            //            Id = (int)reader["Id"],
-            //            IdRota = (int)reader["IdRota"],
-            //            Destino = reader["Destino"].ToString()
-            //        };
-            //        escalas.Add(escala);
-            //    }
-            //}
-
             rota.Escalas = escalas;
         }
 
-        return rota;
+        return rota ?? new RotaViagem();
     }
 
     // inclui uma rota com suas escalas no banco
@@ -163,18 +145,21 @@ public class ApplicationDb
 
             rota.Id = newIdRota;
 
-            foreach (Escala item in rota.Escalas)
+            if (rota.Escalas != null)
             {
-                var commandEscala = new SqlCommand("INSERT INTO ESCALAS (IDROTA, DESTINO) OUTPUT Inserted.ID VALUES (@IdRota, @Destino)", connection);
-                commandEscala.Parameters.AddWithValue("@IdRota", newIdRota);
-                commandEscala.Parameters.AddWithValue("@Destino", item.Destino);
+                foreach (Escala item in rota.Escalas)
+                {
+                    var commandEscala = new SqlCommand("INSERT INTO ESCALAS (IDROTA, DESTINO) OUTPUT Inserted.ID VALUES (@IdRota, @Destino)", connection);
+                    commandEscala.Parameters.AddWithValue("@IdRota", newIdRota);
+                    commandEscala.Parameters.AddWithValue("@Destino", item.Destino);
 
-                //await commandEscala.ExecuteNonQueryAsync();
+                    //await commandEscala.ExecuteNonQueryAsync();
 
-                var newIdEscala = Convert.ToInt32(commandEscala.ExecuteScalar());
-                
-                item.IdRota = newIdRota;
-                item.Id = newIdEscala;
+                    var newIdEscala = Convert.ToInt32(commandEscala.ExecuteScalar());
+
+                    item.IdRota = newIdRota;
+                    item.Id = newIdEscala;
+                }
             }
         }
 
@@ -195,13 +180,16 @@ public class ApplicationDb
 
             await command.ExecuteNonQueryAsync();
 
-            foreach (Escala item in rota.Escalas)
+            if (rota.Escalas != null)
             {
-                var commandEscala = new SqlCommand("UPDATE ESCALAS SET DESTINO = @Destino WHERE ID = @Id", connection);
-                commandEscala.Parameters.AddWithValue("@Id", item.Id);
-                commandEscala.Parameters.AddWithValue("@Destino", item.Destino);
+                foreach (Escala item in rota.Escalas)
+                {
+                    var commandEscala = new SqlCommand("UPDATE ESCALAS SET DESTINO = @Destino WHERE ID = @Id", connection);
+                    commandEscala.Parameters.AddWithValue("@Id", item.Id);
+                    commandEscala.Parameters.AddWithValue("@Destino", item.Destino);
 
-                await commandEscala.ExecuteNonQueryAsync();
+                    await commandEscala.ExecuteNonQueryAsync();
+                }
             }
         }
     }

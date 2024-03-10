@@ -7,25 +7,9 @@ namespace RotasViagensFront.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly HttpClient _httpClient;
-
-        public HomeController(IHttpClientFactory httpClientFactory, ILogger<HomeController> logger)
+        public IActionResult Index()
         {
-            _httpClient = httpClientFactory.CreateClient();
-        }
-
-        public async Task<IActionResult> Index()
-        {
-            List<RotaViagem> rotas = new List<RotaViagem>();
-            HttpResponseMessage response = await _httpClient.GetAsync("https://localhost:7059/api/Rotas"); 
-
-            if (response.IsSuccessStatusCode)
-            {
-                string content = await response.Content.ReadAsStringAsync();
-                rotas = JsonConvert.DeserializeObject<List<RotaViagem>>(content);
-            }
-
-            return View(rotas);
+            return View();
         }
 
         public IActionResult Privacy()
